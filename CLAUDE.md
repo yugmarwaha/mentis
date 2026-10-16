@@ -3,8 +3,16 @@
 A web-based AI tutor that keeps productive struggle. It has Learn Mode and Exam Mode.
 
 ## Read first
-- `PROJECT_BRIEF.md` is the source of project context. Read it before you start work.
+- `docs/PROJECT_BRIEF.md` is the source of project context. Read it before you start work.
 - The brief is not a final specification. Challenge its assumptions.
+
+## Folders
+- `backend/`: FastAPI app.
+- `frontend/`: React and TypeScript UI.
+- `evals/`: scenarios, rubrics, baselines, comparison scripts.
+- `docs/`: brief, ADRs, research notes.
+
+Each folder has its own `CLAUDE.md`.
 
 ## Rules
 - `.claude/rules/writing-style.md`: write in ASD-STE100.
