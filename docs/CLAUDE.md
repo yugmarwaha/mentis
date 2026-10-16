@@ -6,4 +6,4 @@
 - `scenarios.md`: example learner–tutor conversations (draft).
 - `state-machine.md`: intervention states and transitions (draft).
 - `assessment.md`: the form the evaluator fills in for each learner message (draft).
-- Planned: glossary.
+- `glossary.md`: definitions of key terms (draft).
