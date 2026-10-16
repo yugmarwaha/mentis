@@ -16,7 +16,7 @@ Each folder has its own `CLAUDE.md`.
 
 ## Rules
 - `.claude/rules/writing-style.md`: write in ASD-STE100.
-- `.claude/rules/commits.md`: write short, specific commits. Never commit without approval.
+- `.claude/rules/commits.md`: write short, specific commits. Get approval before implementation decisions and design documents.
 - `.claude/rules/keep-docs-current.md`: update all affected documents after each change.
 
 ## Stack (proposed)

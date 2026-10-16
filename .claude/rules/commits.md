@@ -1,7 +1,8 @@
 # Commits
 
-- Never commit without the developer's approval. Ask first, every time. Earlier approval does not cover later commits.
-- Show the planned commit message and the files before you ask.
+- Get the developer's approval before you decide what to implement. Get it again before you commit a design document (ADR, plan, spec). The developer reads it first.
+- Show the planned commit message and the files before you ask. Earlier approval does not cover later commits.
+- Commit routine files without asking: README, .gitignore, config, and edits that only keep documents current.
 - Make one logical change in each commit. Keep commits small.
 - Write the subject in the imperative: "Fix scroll jump in chat window".
 - Name the specific change and where it applies. Say what the code does now, not which area you worked on.
