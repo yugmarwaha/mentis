@@ -18,6 +18,7 @@ Each folder has its own `CLAUDE.md`.
 - `.claude/rules/writing-style.md`: write in ASD-STE100.
 - `.claude/rules/commits.md`: write short, specific commits. Get approval before implementation decisions and design documents.
 - `.claude/rules/git-workflow.md`: use short-lived branches. Ask before you create a branch, push, merge, or delete.
+- `.claude/rules/visuals.md`: use visuals. Keep only Mermaid diagrams in the repository.
 - `.claude/rules/keep-docs-current.md`: update all affected documents after each change.
 
 ## Skills
