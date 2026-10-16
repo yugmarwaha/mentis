@@ -2,7 +2,7 @@
 
 Introductory Python. These show intended behavior and become the first tests. They are not final rules.
 
-Actions: **invite** another attempt, **ask** a focused question, **hint**, **explain** an error, **solution**.
+Actions: **invite** another attempt, **ask** a focused question, **hint**, **explain** an error, **solution**. The policy also uses **credit** (accept a passing attempt), **transfer** (give the transfer problem), and **end**.
 
 ## 1. Valid alternative
 
@@ -11,7 +11,7 @@ Problem: Write a function that returns the largest number in a list.
 > **Learner:** `return sorted(xs)[-1]`
 > **Tutor [ask]:** That works. What happens to the cost if the list has a million numbers?
 > **Learner:** It sorts everything. That seems like a lot of work.
-> **Tutor [invite]:** Right. Can you find the largest number without sorting?
+> **Tutor [ask]:** Right. Can you find the largest number without sorting?
 
 Disclosure check: the tutor does not mark the answer wrong. The tutor does not show the loop version.
 
@@ -23,7 +23,7 @@ Problem: Write a function that adds up the numbers in a list.
 > **Tutor [invite]:** Try the list `[2, 4, 6]` by hand. What do you do to get the total?
 > **Learner:** I add 2 and 4, then add 6.
 > **Tutor [ask]:** What do you need to remember between the steps?
-> **Learner:** The total so far?
+> **Learner:** The total so far. I need to store it, but I don't know how.
 > **Tutor [hint]:** Yes. In code, a variable can hold the total so far. What would it start as?
 
 Disclosure check: the tutor does not write the loop or `total += x`.
@@ -35,9 +35,7 @@ Problem: Print the numbers 1 to 5.
 > **Learner:** `for i in range(5): print(i)` prints 1 to 5.
 > **Tutor [ask]:** Predict the first number it prints. Then run it.
 > **Learner:** It printed 0. But the last one is 5, I think.
-> **Tutor [invite]:** Look at the last line it printed. What is it?
-> **Learner:** 4. So range(5) is 0 to 4?
-> **Tutor [explain]:** Yes. `range(5)` gives 5 numbers, starting at 0. Which values do you give `range` to start at 1?
+> **Tutor [explain]:** Look at the last line. It is 4, not 5. `range(5)` gives 5 numbers, starting at 0. Which values do you give `range` to start at 1?
 
 Disclosure check: the tutor lets the learner see the output first. The tutor does not give `range(1, 6)` before the learner tries.
 
@@ -49,10 +47,11 @@ Problem: Write a function that returns the product of the numbers in a list.
 > **Tutor [invite]:** I can help. What have you tried, even if it is wrong?
 > **Learner:** `total = 0`, then a loop with `total *= x`. It always returns 0.
 > **Tutor [ask]:** What does 0 times any number give?
-> **Learner:** 0. Maybe I start with `total = None`?
+> **Learner:** 0. So I need a different start. Maybe `total = None`?
 > **Tutor [explain]:** You cannot multiply by `None`. It raises an error. What would a starting value do to the first product?
 > **Learner:** I still don't know what number to use.
 > **Tutor [solution]:** Start with 1. Here is the full function: [code]. It works because 1 does not change a product.
+> **Learner:** OK, I see.
 > **Tutor [transfer]:** Now write a function that returns the smallest number in a list. Explain your steps.
 
 Rule: the solution comes after 2 meaningful attempts with help between them and no progress. This example assumes the limit is 2. See `state-machine.md`.

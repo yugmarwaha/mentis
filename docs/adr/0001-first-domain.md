@@ -6,6 +6,7 @@
 - Build for introductory Python first.
 - Keep the subject out of the policy. Only the answer checker knows the subject. For programming, the checker runs the learner's code.
 - For physics or astronomy later, add a new checker. Do not change the policy.
+- In v1 the checker may be a model's judgment. A sandbox that runs learner code is later, if evaluation shows the model misjudges code.
 
 ## Options considered
 - Introductory programming: chosen. Code can run, so checks are easy.

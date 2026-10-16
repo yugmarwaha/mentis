@@ -1,6 +1,6 @@
 # ADR 0002: The policy is rules in code
 
-**Status:** Proposed
+**Status:** Accepted
 
 ## Decision
 - The backend policy is plain code, not the model.
