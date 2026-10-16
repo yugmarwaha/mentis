@@ -2,6 +2,9 @@
 
 Use ASD-STE100 Simplified Technical English for all explanations in this project. This applies to chat replies, docs, ADRs, comments, commit messages, and PR text.
 
+## Documentation
+- Use the `clear-writing` skill (`.claude/skills/clear-writing/`) each time you write or revise documentation. This includes README, `CLAUDE.md`, ADRs, and files in `docs/`.
+
 ## Sentences
 - Write 20 words or fewer in instructions. Write 25 words or fewer in descriptions.
 - Put one idea in each sentence.
