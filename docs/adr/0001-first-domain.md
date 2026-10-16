@@ -2,34 +2,22 @@
 
 **Status:** Accepted
 
-## Context
-The brief leaves the first subject open (section 12, question 1). Tutoring on broad topics makes evaluation very hard.
-
-The developer plans to move to physics or astronomy later. The developer also wants to test Mentis in an astronomy class.
-
-## Options
-
-| Option | For | Against |
-|---|---|---|
-| 1. Introductory programming | The tutor can run the learner's code to check an attempt. "Meaningful attempt" and "premature disclosure" are easier to define. | It does not match the developer's classes. Running learner code needs a safe, isolated environment. |
-| 2. Introductory physics (numeric problems) | It matches the developer's classes. A numeric answer is easy to check. | The reasoning steps are harder to check than program output. Units and assumptions add cases. |
-| 3. Astronomy (concept questions) | It matches the developer's class. | No automatic check exists. This is the "oxygen" case from the brief. The evaluator must judge everything. This option is the hardest to evaluate. |
-
 ## Decision
-Use option 1 for the first version. Prove the intervention policy on programming first.
+- Build for introductory Python first.
+- Keep the subject out of the policy. Only the answer checker knows the subject. For programming, the checker runs the learner's code.
+- For physics or astronomy later, add a new checker. Do not change the policy.
 
-Keep the subject separate from the policy:
-- The policy does not depend on running code.
-- One part, the **answer checker**, knows the subject.
-- The programming checker runs the learner's code.
-- A later checker can use a numeric check or the model's judgment.
+## Options considered
+- Introductory programming: chosen. Code can run, so checks are easy.
+- Introductory physics with numeric problems: matches the developer's class. Reasoning steps are harder to check.
+- Astronomy concept questions: matches the developer's class. No automatic check, so it is the hardest to evaluate.
 
-## Not decided here
-- How to run learner code safely. This needs its own ADR.
-- The thresholds in the policy.
-- The state machine.
+## Why
+Code can run, so attempts and answer leaks are easy to check. Concept questions in astronomy have no automatic check.
 
-## Evidence to revisit
-Reconsider this decision if:
-- The policy works on programming scenarios, and a second checker can plug in without changes to the policy. Then move to physics or astronomy.
-- Programming scenarios do not show the behavior we want to test. Then choose another domain.
+## Not decided
+How to run learner code safely. Write an ADR before you run any learner code.
+
+## Revisit when
+- A second checker plugs in with no policy change. Then move to physics or astronomy.
+- Programming scenarios stop showing the behavior we test.
