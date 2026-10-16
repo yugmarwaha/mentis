@@ -1,8 +1,6 @@
 # Example conversations (draft)
 
-Domain: introductory Python. See ADR 0001.
-
-Status: drafted, not reviewed. The tutor actions come from the brief, section 4. We have not decided when each action applies. These examples show the intended behavior, not final rules.
+Introductory Python. These show intended behavior and become the first tests. They are not final rules.
 
 Actions: **invite** another attempt, **ask** a focused question, **hint**, **explain** an error, **solution**.
 
