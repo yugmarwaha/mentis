@@ -1,5 +1,7 @@
 # Commits
 
+- Never commit without the developer's approval. Ask first, every time. Earlier approval does not cover later commits.
+- Show the planned commit message and the files before you ask.
 - Make one logical change in each commit. Keep commits small.
 - Write the subject in the imperative: "Fix scroll jump in chat window".
 - Name the specific change and where it applies. Say what the code does now, not which area you worked on.
