@@ -1,4 +1,4 @@
-# Mentis (Learning with Friction)
+# Mentis
 
 A web-based AI tutor that keeps productive struggle. It asks the learner to try first. It then gives graduated help.
 

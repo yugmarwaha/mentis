@@ -1,4 +1,4 @@
-# Learning with Friction
+# Mentis
 
 A web-based AI tutor that keeps productive struggle. It has Learn Mode and Exam Mode.
 

@@ -1,4 +1,4 @@
-# Learning with Friction — Project Brief
+# Mentis — Project Brief
 
 > **Status:** Pre-implementation design and handoff, October 2026  
 > **Purpose:** Shared context for the human developer and a local coding agent (Codex / Claude Code).  
@@ -176,7 +176,7 @@ Design-process inspiration: Matt Pocock's **`grill-with-docs`** skill — relent
 
 ## 11. Resume target — aspirational, not achieved
 
-**Learning with Friction | Python, FastAPI, React, TypeScript, PostgreSQL, LLM API**  
+**Mentis | Python, FastAPI, React, TypeScript, PostgreSQL, LLM API**  
 *Optional later: LangGraph if justified; PyTorch only if a model is actually trained.*
 
 These are **target formulations**. Replace placeholders only with defensible measured values; don't claim 3 modes when only 2 are built, don't claim trained models without training them, and don't fabricate users.
