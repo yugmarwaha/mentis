@@ -133,7 +133,7 @@ Three research themes from our discussion:
 2. **Retrieval practice / test-enhanced learning:** Retrieving knowledge can strengthen retention more than merely re-reading it.
 3. **Productive failure:** Attempting and exploring a problem before instruction can prepare students to learn from a subsequent explanation.
 
-Research **informs hypotheses**; it does not dictate universal intervention rules. Before implementation, identify and read the actual papers/methods and record bibliographic details and limitations accurately in `docs/research.md`.
+Research **informs hypotheses**; it does not dictate universal intervention rules. The three papers and their main conclusions are in [research.md](research.md).
 
 Design-process inspiration: Matt Pocock's **`grill-with-docs`** skill — relentless interview/questions plus architecture decisions and glossary. Use it during planning, not as a requirement for the student-facing product.
 
