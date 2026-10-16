@@ -19,5 +19,8 @@ Each folder has its own `CLAUDE.md`.
 - `.claude/rules/commits.md`: write short, specific commits. Get approval before implementation decisions and design documents.
 - `.claude/rules/keep-docs-current.md`: update all affected documents after each change.
 
+## Skills
+- `.claude/skills/clear-writing/`: write or revise technical text in Simplified Technical English.
+
 ## Stack (proposed)
 Python, FastAPI, React, TypeScript, PostgreSQL, LLM API.
