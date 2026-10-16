@@ -10,7 +10,7 @@ The answer checker adds one more input. In programming, it runs the learner's co
 
 | Field | Values | Meaning |
 |---|---|---|
-| `attempt` | none, partial, full | `none`: no idea offered. `partial`: an idea or incomplete code. `full`: a complete try, right or wrong. |
+| `attempt` | none, guess, partial, full | `none`: no idea offered. `guess`: a technique or answer with no reasoning. `partial`: some reasoning or incomplete code. `full`: a complete try, right or wrong. `partial` and `full` are meaningful attempts (see `glossary.md`). |
 | `stuck` | yes, no, unclear | The learner cannot make progress. |
 | `misconception` | none, or a short label | A wrong belief in the message. |
 | `valid_alternative` | yes, no | The approach differs from the expected one but works. |
@@ -28,6 +28,7 @@ Length is not a field. A long message is not proof of effort.
 |---|---|---|---|---|---|---|---|
 | 1. `return sorted(xs)[-1]` | full | no | none | yes | no | no | passes |
 | 2. "I don't know where to start." | none | yes | none | no | no | no | not_checked |
+| 2. "Maybe a loop?" | guess | yes | none | no | no | no | not_checked |
 | 2. "I add 2 and 4, then add 6." | partial | no | none | no | no | no | not_checked |
 | 3. "`range(5)` prints 1 to 5." | full | no | `range(n)` starts at 1 | no | no | no | fails |
 | 4. "Just give me the code." | none | unclear | none | no | yes | no | not_checked |
