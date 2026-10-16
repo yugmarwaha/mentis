@@ -5,7 +5,7 @@
 ## Decision
 - The backend policy is plain code, not the model.
 - It is a pure function. It makes no model calls.
-- Inputs: current state, assessment form, checker result, session history.
+- Inputs: current state, assessment form, checker result, session history, problem difficulty, learner familiarity.
 - Outputs: next action, next state, what the response generator may reveal.
 - Put thresholds in config. Mark each one untested.
 - The model only writes the message for the chosen action.

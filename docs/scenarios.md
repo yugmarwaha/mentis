@@ -49,11 +49,13 @@ Problem: Write a function that returns the product of the numbers in a list.
 > **Tutor [invite]:** I can help. What have you tried, even if it is wrong?
 > **Learner:** `total = 0`, then a loop with `total *= x`. It always returns 0.
 > **Tutor [ask]:** What does 0 times any number give?
-> **Learner:** 0. Oh. But what do I start with? I'm stuck, this is taking long.
+> **Learner:** 0. Maybe I start with `total = None`?
+> **Tutor [explain]:** You cannot multiply by `None`. It raises an error. What would a starting value do to the first product?
+> **Learner:** I still don't know what number to use.
 > **Tutor [solution]:** Start with 1. Here is the full function: [code]. It works because 1 does not change a product.
 > **Tutor [transfer]:** Now write a function that returns the smallest number in a list. Explain your steps.
 
-Open question: when is the solution justified? We have not decided this. The example shows a learner who made a real attempt, found the error with help, and is still stuck.
+Rule: the solution comes after 2 meaningful attempts with help between them and no progress. This example assumes the limit is 2. See `state-machine.md`.
 
 Disclosure check: the tutor gives no code on the first demand.
 
