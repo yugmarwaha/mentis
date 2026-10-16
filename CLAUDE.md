@@ -21,6 +21,7 @@ Each folder has its own `CLAUDE.md`.
 
 ## Skills
 - `.claude/skills/clear-writing/`: write or revise technical text in Simplified Technical English.
+- `.claude/skills/mean-review/`: review finished code to find problems, not to confirm it works.
 
 ## Stack (proposed)
 Python, FastAPI, React, TypeScript, PostgreSQL, LLM API.
