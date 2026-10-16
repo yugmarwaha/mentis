@@ -15,12 +15,12 @@ Use ASD-STE100 Simplified Technical English for all explanations in this project
 
 ## Words
 - Use one word for one meaning. Do not swap synonyms for variety.
-- Use the same name for the same thing. Use the terms in `docs/glossary.md`.
+- Use the same name for the same thing. Use the terms in `docs/glossary.md` when that file exists.
 - Use simple words: "use", not "utilize"; "start", not "initiate".
 - Do not use idioms, slang, or figurative language.
 - Keep articles ("the", "a"). Do not drop them.
 - Do not use more than 3 nouns in a row. Rewrite long noun strings.
-- Write out a word on first use if it is an abbreviation. Then use the short form.
+- Spell out each abbreviation on first use. Then use the short form.
 
 ## Form
 - Put the most important point first.

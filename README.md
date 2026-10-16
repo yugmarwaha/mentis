@@ -1,8 +1,8 @@
 # Mentis
 
-A web-based AI tutor that keeps productive struggle. It asks the learner to try first. It then gives graduated help.
+A web-based AI tutor that keeps productive struggle. It asks the learner to try first. Then it gives help in steps.
 
-**Status:** Setup. No application code yet.
+**Status:** Setup phase. There is no application code yet.
 
 ## Modes
 - **Learn Mode:** the learner tries first. The tutor gives help in steps.
