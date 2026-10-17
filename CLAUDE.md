@@ -7,7 +7,7 @@ A web-based AI tutor that keeps productive struggle. It has Learn Mode and Exam 
 - The brief is not a final specification. Challenge its assumptions.
 
 ## Folders
-- `backend/`: FastAPI app.
+- `backend/`: Python backend. The policy and the evaluator exist. The web server is planned.
 - `frontend/`: React and TypeScript UI.
 - `evals/`: scenarios, rubrics, baselines, comparison scripts.
 - `docs/`: brief, ADRs, research notes.

@@ -1,6 +1,6 @@
 # Mentis — Project Brief
 
-> **Status:** Pre-implementation design and handoff, October 2026  
+> **Status:** Design and handoff, October 2026. The policy and the evaluator (fake model only) exist.  
 > **Purpose:** Shared context for the human developer and a local coding agent (Codex / Claude Code).  
 > **Important:** This brief records our current reasoning. It is not a final technical specification. Challenge assumptions and record decisions before you add complexity.
 
@@ -143,7 +143,7 @@ Design-process inspiration: Matt Pocock's **`grill-with-docs`** skill. It gives 
 
 - Write 5–10 realistic example learning conversations. Include valid alternatives, novice stuck cases, persistent incorrect beliefs, solution demands, and subjective/ambiguous questions.
 - Decide exactly what counts as a “premature disclosure,” a “meaningful attempt,” and a “good intervention.” Do this for a narrow initial subject domain.
-- Choose the first domain intentionally (for example, introductory CS concepts or mathematics). **Undecided.** Tutoring on broad, arbitrary topics makes evaluation much harder.
+- Choose the first domain intentionally. The first domain is introductory programming ([ADR 0001](adr/0001-first-domain.md)). Tutoring on broad, arbitrary topics makes evaluation much harder.
 - Record initial architecture decisions in brief ADRs. Define a minimal intervention state machine.
 
 ### Phase 1 — Small working end-to-end slice
