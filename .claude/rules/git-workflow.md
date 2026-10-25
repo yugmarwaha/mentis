@@ -1,12 +1,20 @@
 # Git workflow
 
-Keep the workflow light. One developer works in this repository. Do not use pull requests.
+One developer works in this repository. Every change goes through a branch and a pull request (PR).
 
 ## Branches
-- Use a short-lived branch for a substantial change: `feat/`, `fix/`, or `refactor/`.
-- Work directly on `main` for small changes: README, `.gitignore`, config, documents, and small fixes.
-- Before you start work, check the current branch. Say if a branch is better, and suggest a name.
-- Never create or switch a branch without the developer's approval. Wait for the answer.
+- Create a new branch for every change. This includes documents, config, and small fixes.
+- Name the branch `type/short-name`. Use lowercase and hyphens: `fix/scroll-jump`.
+- Use one of these types:
+  - `feat`: a new feature.
+  - `fix`: a bug fix.
+  - `docs`: documents only.
+  - `refactor`: change the code structure, not the behavior.
+  - `test`: add or change tests only.
+  - `chore`: config, dependencies, tooling.
+- Start each branch from an up-to-date `main`.
+- Check the current branch before you start work. Never commit to `main`.
+- You may create the branch for a task the developer asked for. Tell the developer the branch name.
 
 ## Design documents
 - Write a design document (ADR, plan, spec) and leave it uncommitted. The developer reads it first.
@@ -15,11 +23,15 @@ Keep the workflow light. One developer works in this repository. Do not use pull
 ## Commits
 - Make small commits with specific messages. Follow `.claude/rules/commits.md`.
 
-## Merge and push
-- Ask before you push, merge, or delete a branch.
-- Merge a branch into `main` with a fast-forward or a rebase. Do not create merge commits.
-- Merge only when the relevant tests pass. If no tests exist yet, say so when you ask.
-- Delete the branch after the merge.
+## Pull requests
+1. Make sure the relevant tests pass. If no tests exist yet, say so.
+2. Ask the developer before you push the branch.
+3. Push the branch. Open a PR to `main`.
+4. Write the PR title like a commit subject. In the body, say what changed, why, and how you tested it. Keep it short.
+5. The developer reviews the PR and merges it on GitHub.
+
+- Do not merge a PR yourself. Do not push to `main`.
+- After the merge, update local `main`. Ask before you delete the old branch.
 - Keep `main` stable.
 
 ## Remote

@@ -19,7 +19,7 @@ SCENARIOS = [
     ("s1", case(Attempt.FULL, Stuck.NO, 0, valid_alt=True, checker=Checker.PASSES), Action.ASK, None),
     ("s2a", case(Attempt.NONE, Stuck.YES, 0), Action.INVITE, None),
     ("s2b", case(Attempt.PARTIAL, Stuck.NO, 0, low=1), Action.ASK, None),
-    ("s2c", case(Attempt.GUESS, Stuck.YES, 0), Action.ASK, None),
+    ("s2c", case(Attempt.PARTIAL, Stuck.YES, 1), Action.HINT, None),
     ("s3a", case(Attempt.FULL, Stuck.NO, 0, misconception="range starts at 1"), Action.ASK, None),
     ("s3b", case(Attempt.FULL, Stuck.NO, 1, misconception="range starts at 1"), Action.EXPLAIN, None),
     ("s4d", case(Attempt.NONE, Stuck.YES, 2, asks=True), Action.SOLUTION, State.SOLUTION_SHOWN),

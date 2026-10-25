@@ -1,6 +1,6 @@
 # Mentis — Project Brief
 
-> **Status:** Pre-implementation design and handoff, October 2026  
+> **Status:** Design and handoff, October 2026. The policy, the evaluator, and the Haiku client exist.  
 > **Purpose:** Shared context for the human developer and a local coding agent (Codex / Claude Code).  
 > **Important:** This brief records our current reasoning. It is not a final technical specification. Challenge assumptions and record decisions before you add complexity.
 
@@ -69,7 +69,7 @@ FastAPI application
 
 **Why separate the evaluator, policy, and generator?** A system prompt that says “don't reveal the answer” is not reliable enforcement. The backend should govern state and eligible interventions. Where possible, the backend should limit what the response generator receives or may reveal. With open-ended problems, hints from the model can still leak solutions. We claim no perfect guarantee.
 
-**Tech candidates:** Python, FastAPI, React, TypeScript, PostgreSQL, OpenAI API or a comparable LLM API. **LangGraph** is optional. Use it only if the workflow becomes complex enough to justify graph orchestration. **PyTorch** is not part of the initial implementation. Do not add it only to decorate the skills list.
+**Tech candidates:** Python, FastAPI, React, TypeScript, PostgreSQL, the Anthropic API with Claude Haiku 5.5 (see [ADR 0004](adr/0004-haiku-evaluator-model.md)). **LangGraph** is optional. Use it only if the workflow becomes complex enough to justify graph orchestration. **PyTorch** is not part of the initial implementation. Do not add it only to decorate the skills list.
 
 **Agent instruction:** Do not build everything at once. Work in vertical slices with explicit tests. Explain architectural choices and tradeoffs before you generate large amounts of code. The developer should understand and own the major decisions and the implementation.
 
@@ -143,7 +143,7 @@ Design-process inspiration: Matt Pocock's **`grill-with-docs`** skill. It gives 
 
 - Write 5–10 realistic example learning conversations. Include valid alternatives, novice stuck cases, persistent incorrect beliefs, solution demands, and subjective/ambiguous questions.
 - Decide exactly what counts as a “premature disclosure,” a “meaningful attempt,” and a “good intervention.” Do this for a narrow initial subject domain.
-- Choose the first domain intentionally (for example, introductory CS concepts or mathematics). **Undecided.** Tutoring on broad, arbitrary topics makes evaluation much harder.
+- Choose the first domain intentionally. The first domain is introductory programming ([ADR 0001](adr/0001-first-domain.md)). Tutoring on broad, arbitrary topics makes evaluation much harder.
 - Record initial architecture decisions in brief ADRs. Define a minimal intervention state machine.
 
 ### Phase 1 — Small working end-to-end slice

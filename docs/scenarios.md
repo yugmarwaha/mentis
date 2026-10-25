@@ -8,6 +8,8 @@ Actions: **invite** another attempt, **ask** a focused question, **hint**, **exp
 
 Problem: Write a function that returns the largest number in a list.
 
+Expected approach: loop with a running maximum
+
 > **Learner:** `return sorted(xs)[-1]`
 > **Tutor [ask]:** That works. What happens to the cost if the list has a million numbers?
 > **Learner:** It sorts everything. That seems like a lot of work.
@@ -18,6 +20,10 @@ Disclosure check: the tutor does not mark the answer wrong. The tutor does not s
 ## 2. Stuck novice
 
 Problem: Write a function that adds up the numbers in a list.
+
+Expected approach: loop with a running total
+
+Assume medium difficulty and some familiarity. The policy then needs 2 helped attempts.
 
 > **Learner:** I don't know where to start.
 > **Tutor [invite]:** Try the list `[2, 4, 6]` by hand. What do you do to get the total?
@@ -32,6 +38,8 @@ Disclosure check: the tutor does not write the loop or `total += x`.
 
 Problem: Print the numbers 1 to 5.
 
+Expected approach: `range(1, 6)`
+
 > **Learner:** `for i in range(5): print(i)` prints 1 to 5.
 > **Tutor [ask]:** Predict the first number it prints. Then run it.
 > **Learner:** It printed 0. But the last one is 5, I think.
@@ -42,6 +50,8 @@ Disclosure check: the tutor lets the learner see the output first. The tutor doe
 ## 4. Demand for the solution
 
 Problem: Write a function that returns the product of the numbers in a list.
+
+Expected approach: loop with a running product that starts at 1
 
 > **Learner:** Just give me the code.
 > **Tutor [invite]:** I can help. What have you tried, even if it is wrong?
@@ -61,6 +71,8 @@ Disclosure check: the tutor gives no code on the first demand.
 ## 5. Ambiguous question
 
 Problem: "What is the best way to loop over a list?"
+
+Expected approach: none, ambiguous
 
 > **Learner:** What is the best way to loop over a list?
 > **Tutor [ask]:** It depends on your goal. Do you need the position of each item, or only the items?

@@ -7,7 +7,7 @@ A web-based AI tutor that keeps productive struggle. It has Learn Mode and Exam 
 - The brief is not a final specification. Challenge its assumptions.
 
 ## Folders
-- `backend/`: FastAPI app.
+- `backend/`: Python backend. The policy and the evaluator exist. The web server is planned.
 - `frontend/`: React and TypeScript UI.
 - `evals/`: scenarios, rubrics, baselines, comparison scripts.
 - `docs/`: brief, ADRs, research notes.
@@ -17,7 +17,7 @@ Each folder has its own `CLAUDE.md`.
 ## Rules
 - `.claude/rules/writing-style.md`: write in ASD-STE100.
 - `.claude/rules/commits.md`: write short, specific commits. Get approval before implementation decisions and design documents.
-- `.claude/rules/git-workflow.md`: use short-lived branches. Ask before you create a branch, push, merge, or delete.
+- `.claude/rules/git-workflow.md`: use a branch and a pull request for every change. Ask before you push. The developer merges on GitHub.
 - `.claude/rules/visuals.md`: use visuals. Keep only Mermaid diagrams in the repository.
 - `.claude/rules/keep-docs-current.md`: update all affected documents after each change.
 
@@ -25,6 +25,8 @@ Each folder has its own `CLAUDE.md`.
 - `.claude/skills/clear-writing/`: write or revise technical text in Simplified Technical English.
 - `.claude/skills/verify-change/`: verify policy or design changes with three read-only reviewers.
 - `.claude/skills/mean-review/`: review finished code to find problems, not to confirm it works.
+- `.claude/skills/technical-writing/`: write or review docs, readmes, and PR text to a four-layer standard. The developer invokes it.
+- `.claude/skills/unslop/`: remove AI patterns from any text. The developer invokes it.
 
 ## Stack (proposed)
-Python, FastAPI, React, TypeScript, PostgreSQL, LLM API.
+Python, FastAPI (planned), React, TypeScript, PostgreSQL, Anthropic API (Claude Haiku 5.5).
