@@ -30,7 +30,7 @@ cd backend && uv run python ../evals/run_scenarios.py
 ```
 
 ## Contribute
-Make a branch for every change: `feat/`, `fix/`, `docs/`, `refactor/`, `test/`, or `chore/`. Open a pull request to `main`. See `.claude/rules/git-workflow.md`.
+Large changes use a branch: `feat/`, `fix/`, `docs/`, `refactor/`, `test/`, or `chore/`. A pull request merges the branch into `main`. See `.claude/rules/git-workflow.md`.
 
 ## Read more
 - [Project brief](docs/PROJECT_BRIEF.md)
