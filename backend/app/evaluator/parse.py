@@ -50,7 +50,7 @@ class ReplyError(ValueError):
 def _enum(kind: type[Enum], value: object, name: str) -> Enum:
     if isinstance(value, str):
         for member in kind:
-            if member.value == value:
+            if member.value == value.lower():
                 return member
     raise ReplyError(f"{name} has an invalid value")
 

@@ -13,7 +13,8 @@ from pathlib import Path
 import pytest
 
 from app.evaluator import (
-    FALLBACK, MAX_TEXT_CHARS, Problem, Speaker, Turn, build_prompt, evaluate, is_fallback, parse_reply,
+    FALLBACK, MAX_TEXT_CHARS, ModelRefusal, ModelSetupError, Problem, Speaker, Turn, build_prompt, evaluate,
+    is_fallback, parse_reply,
 )
 from app.evaluator.fake import ScriptedModel
 from app.evaluator.parse import ReplyError
@@ -198,8 +199,11 @@ def test_importing_evaluator_loads_no_io_modules():
 
 def test_public_signatures_are_pinned():
     sig = inspect.signature(evaluate)
-    assert list(sig.parameters) == ["problem", "turns", "message", "model", "max_recent_turns"]
+    assert list(sig.parameters) == ["problem", "turns", "message", "model", "max_recent_turns", "on_failure"]
     assert sig.parameters["max_recent_turns"].default == 6
+    assert sig.parameters["on_failure"].default is None
+    assert issubclass(ModelSetupError, Exception) and issubclass(ModelRefusal, Exception)
+    assert not issubclass(ModelSetupError, ModelRefusal) and not issubclass(ModelRefusal, ModelSetupError)
     sig = inspect.signature(build_prompt)
     assert list(sig.parameters) == ["problem", "recent_turns", "message", "note"]
     assert sig.parameters["note"].default is None
@@ -322,9 +326,20 @@ def mis(text):
     (reply(attempt="partial", valid_alternative=True), dataclasses.replace(GOOD_ASSESSMENT, valid_alternative=True)),
     (reply(attempt="full", valid_alternative=True),
      dataclasses.replace(GOOD_ASSESSMENT, attempt=Attempt.FULL, valid_alternative=True)),
+    # attempt and stuck match in any letter case; the result is the lowercase enum
+    (reply(attempt="Full"), dataclasses.replace(GOOD_ASSESSMENT, attempt=Attempt.FULL)),
+    (reply(attempt="FULL", stuck="UNCLEAR"),
+     dataclasses.replace(GOOD_ASSESSMENT, attempt=Attempt.FULL, stuck=Stuck.UNCLEAR)),
+    (reply(attempt="NoNe", stuck="Yes"), dataclasses.replace(GOOD_ASSESSMENT, attempt=Attempt.NONE, stuck=Stuck.YES)),
 ])
 def test_parse_reply_accepts(text, want):
     assert parse_reply(text) == want
+
+
+def test_enum_ignores_ascii_case_only():
+    assert parse_reply(reply(attempt="GUESS")).attempt == Attempt.GUESS
+    with pytest.raises(ReplyError):
+        parse_reply(reply(attempt="gueſſ"))
 
 
 @pytest.mark.parametrize("text", [
@@ -339,8 +354,8 @@ def test_parse_reply_accepts(text, want):
     reply()[:-1] + ', "attempt": "full"}',
     *[reply().replace('"uncertain": false', f'"uncertain": {c}') for c in ("NaN", "Infinity", "-Infinity")],
     "[" * 100000, '{"a":' * 100000,
-    reply(attempt="Full"), reply(attempt="FULL"), reply(attempt=" full"), reply(attempt=3), reply(attempt=None),
-    reply(stuck="maybe"), reply(stuck="Yes"), reply(stuck=True),
+    reply(attempt=" full"), reply(attempt="Full "), reply(attempt="F ULL"), reply(attempt=3), reply(attempt=None),
+    reply(attempt="ｆｕｌｌ"), reply(stuck="maybe"), reply(stuck=" Yes"), reply(stuck="UN CLEAR"), reply(stuck=True),
     *[reply(misconception=m) for m in ("", "   ", 5, False, "off\nby one", "off​by", "bell\x07", "x" * 81)],
     reply(uncertain=1), reply(valid_alternative=0), reply(asks_for_solution="yes"),
     reply(ambiguous_question=None), reply(uncertain="false"),
@@ -377,7 +392,7 @@ class ListModel:
     ([ValueError("model error, not a reply error"), reply()], GOOD_ASSESSMENT, NOTE_CALL_FAILED),
     (["not json", "still not json", reply()], FALLBACK, NOTE_INVALID_REPLY),
     ([ValueError("a"), RuntimeError("b"), reply()], FALLBACK, NOTE_CALL_FAILED),
-    ([reply(attempt="FULL"), TimeoutError("slow"), reply()], FALLBACK, NOTE_INVALID_REPLY),
+    ([reply(attempt=" full"), TimeoutError("slow"), reply()], FALLBACK, NOTE_INVALID_REPLY),
 ])
 def test_retry_once_with_the_note_for_the_failure_kind(replies, want, note):
     model = ListModel(replies)
@@ -388,6 +403,102 @@ def test_retry_once_with_the_note_for_the_failure_kind(replies, want, note):
         assert len(model.prompts) == 1
     else:
         assert model.prompts[1:] == [build_prompt(PROBLEM, turns(2), MESSAGE, note=note)]
+
+
+class Recorder:
+    def __init__(self):
+        self.calls = []
+
+    def __call__(self, *args, **kwargs):
+        assert not kwargs and len(args) == 2 and all(type(a) is str for a in args), (args, kwargs)
+        self.calls.append(args)
+
+
+SECRET = "secret-7c1e"
+
+
+@pytest.mark.parametrize("replies, want, calls", [
+    ([reply()], GOOD_ASSESSMENT, []),
+    ([RuntimeError(SECRET), reply()], GOOD_ASSESSMENT, [("call_failed", "RuntimeError")]),
+    ([SECRET, reply()], GOOD_ASSESSMENT, [("invalid_reply", "ReplyError")]),
+    ([TimeoutError(SECRET), SECRET], FALLBACK,
+     [("call_failed", "TimeoutError"), ("invalid_reply", "ReplyError"), ("fallback", "")]),
+    ([SECRET, ValueError(SECRET)], FALLBACK,
+     [("invalid_reply", "ReplyError"), ("call_failed", "ValueError"), ("fallback", "")]),
+    ([ModelRefusal(SECRET), reply()], FALLBACK, [("refusal", "ModelRefusal"), ("fallback", "")]),
+    ([SECRET, ModelRefusal(SECRET), reply()], FALLBACK,
+     [("invalid_reply", "ReplyError"), ("refusal", "ModelRefusal"), ("fallback", "")]),
+])
+def test_on_failure_gets_the_kind_and_class_name_only(replies, want, calls):
+    model, cb = ListModel(replies), Recorder()
+    got = evaluate(PROBLEM, [Turn(Speaker.LEARNER, SECRET)], SECRET + " msg", model, on_failure=cb)
+    assert got == want and cb.calls == calls
+    assert len(model.prompts) == len([c for c in calls if c[0] != "fallback"]) + (want != FALLBACK)
+    for args in cb.calls:  # no reply text, prompt text, or exception message
+        assert all(SECRET not in a and "msg" not in a for a in args)
+
+
+def test_refusal_is_final_and_makes_one_call():
+    model = ListModel([ModelRefusal("no"), reply()])
+    assert evaluate(PROBLEM, [], MESSAGE, model) == FALLBACK
+    assert model.prompts == [build_prompt(PROBLEM, [], MESSAGE)]
+
+
+def test_setup_error_is_raised_without_a_retry():
+    err = ModelSetupError("AuthenticationError")
+    for kw in ({}, {"on_failure": Recorder()}):
+        model = ListModel([err, reply()])
+        with pytest.raises(ModelSetupError) as caught:
+            evaluate(PROBLEM, [], MESSAGE, model, **kw)
+        assert caught.value is err and len(model.prompts) == 1
+        if kw:
+            assert kw["on_failure"].calls == [("setup_error", "ModelSetupError")]
+    model, cb = ListModel(["not json", err, reply()]), Recorder()
+    with pytest.raises(ModelSetupError):
+        evaluate(PROBLEM, [], MESSAGE, model, on_failure=cb)
+    assert cb.calls == [("invalid_reply", "ReplyError"), ("setup_error", "ModelSetupError")]
+
+
+def test_failing_callback_cannot_hide_a_setup_error():
+    err = ModelSetupError("AuthenticationError")
+
+    def bad_cb(kind, detail):
+        raise RuntimeError("callback broke")
+
+    model = ListModel([err, reply()])
+    with pytest.raises(ModelSetupError) as caught:
+        evaluate(PROBLEM, [], MESSAGE, model, on_failure=bad_cb)
+    assert caught.value is err and len(model.prompts) == 1
+
+
+def test_callback_errors_still_propagate_on_other_paths():
+    def bad_cb(kind, detail):
+        raise RuntimeError("callback broke")
+
+    for replies in (["not json", "not json"], [ModelRefusal("no")], [RuntimeError("x"), reply()]):
+        with pytest.raises(RuntimeError, match="callback broke"):
+            evaluate(PROBLEM, [], MESSAGE, ListModel(replies), on_failure=bad_cb)
+
+
+@pytest.mark.parametrize("bad", [3, "log", object(), True])
+def test_on_failure_must_be_callable_or_none(bad):
+    model = ListModel([reply()])
+    with pytest.raises(TypeError):
+        evaluate(PROBLEM, [], MESSAGE, model, on_failure=bad)
+    assert model.prompts == []
+    assert evaluate(PROBLEM, [], MESSAGE, model, on_failure=None) == GOOD_ASSESSMENT
+
+
+def test_callback_exception_propagates():
+    class Boom(Exception):
+        pass
+
+    def cb(kind, detail):
+        raise Boom(kind)
+
+    for replies in (["not json", reply()], [RuntimeError(), reply()], [ModelRefusal()]):
+        with pytest.raises(Boom):
+            evaluate(PROBLEM, [], MESSAGE, ListModel(replies), on_failure=cb)
 
 
 def test_keyboard_interrupt_passes_through():

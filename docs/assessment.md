@@ -39,7 +39,7 @@ Code checks each model reply (`parse_reply`):
 - The reply is one JSON object. One Markdown code fence around it is allowed. The tag `json` is optional and can have any case. Text outside the fence is invalid.
 - A duplicate key, `NaN`, or `Infinity` is invalid.
 - The object has exactly the seven fields. A missing or extra field is invalid.
-- `attempt` and `stuck` are exact lowercase values from the table.
+- `attempt` and `stuck` are values from the table in any letter case. The parser returns the lowercase value. A value with spaces is invalid.
 - `misconception` is null, or a string. The string must not be blank. It must be one printable line of 80 characters or fewer. It must contain a letter.
 - The model must write `null` for no misconception. The parser also turns `none`, `N/A`, and similar words into `None`.
 - The check ignores case, accents, Unicode form, and trailing punctuation. The words are none, null, n/a, na, nil, nothing, no, none found, no misconception(s), no wrong belief(s), and not applicable.

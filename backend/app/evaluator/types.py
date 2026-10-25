@@ -54,6 +54,17 @@ class Problem:
             check_text(self.expected_approach, "expected_approach")
 
 
+class ModelSetupError(Exception):
+    """A setup mistake: wrong key, no permission, unknown model, or bad request.
+
+    A retry cannot fix it.
+    """
+
+
+class ModelRefusal(Exception):
+    """The model refused to answer. A retry will likely refuse again."""
+
+
 class Model(Protocol):
     def complete(self, prompt: str) -> str:
         """Return text that should be a JSON object."""
