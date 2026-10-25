@@ -1,6 +1,6 @@
 # Mentis — Project Brief
 
-> **Status:** Design and handoff, October 2026. The policy and the evaluator (fake model only) exist.  
+> **Status:** Design and handoff, October 2026. The policy, the evaluator, and the Haiku client exist.  
 > **Purpose:** Shared context for the human developer and a local coding agent (Codex / Claude Code).  
 > **Important:** This brief records our current reasoning. It is not a final technical specification. Challenge assumptions and record decisions before you add complexity.
 
@@ -69,7 +69,7 @@ FastAPI application
 
 **Why separate the evaluator, policy, and generator?** A system prompt that says “don't reveal the answer” is not reliable enforcement. The backend should govern state and eligible interventions. Where possible, the backend should limit what the response generator receives or may reveal. With open-ended problems, hints from the model can still leak solutions. We claim no perfect guarantee.
 
-**Tech candidates:** Python, FastAPI, React, TypeScript, PostgreSQL, OpenAI API or a comparable LLM API. **LangGraph** is optional. Use it only if the workflow becomes complex enough to justify graph orchestration. **PyTorch** is not part of the initial implementation. Do not add it only to decorate the skills list.
+**Tech candidates:** Python, FastAPI, React, TypeScript, PostgreSQL, the Anthropic API with Claude Haiku 5.5 (see [ADR 0004](adr/0004-haiku-evaluator-model.md)). **LangGraph** is optional. Use it only if the workflow becomes complex enough to justify graph orchestration. **PyTorch** is not part of the initial implementation. Do not add it only to decorate the skills list.
 
 **Agent instruction:** Do not build everything at once. Work in vertical slices with explicit tests. Explain architectural choices and tradeoffs before you generate large amounts of code. The developer should understand and own the major decisions and the implementation.
 
