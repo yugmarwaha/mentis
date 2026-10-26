@@ -56,8 +56,8 @@ Expected approach: loop with a running product that starts at 1
 > **Learner:** Just give me the code.
 > **Tutor [invite]:** I can help. What have you tried, even if it is wrong?
 > **Learner:** `total = 0`, then a loop with `total *= x`. It always returns 0.
-> **Tutor [ask]:** What does 0 times any number give?
-> **Learner:** 0. So I need a different start. Maybe `total = None`?
+> **Tutor [explain]:** Check the first step. `0 * x` is 0 for every `x`, so the total stays 0. What start value would keep the first product right?
+> **Learner:** So I need a different start. Maybe `total = None`?
 > **Tutor [explain]:** You cannot multiply by `None`. It raises an error. What would a starting value do to the first product?
 > **Learner:** I still don't know what number to use.
 > **Tutor [solution]:** Start with 1. Here is the full function: [code]. It works because 1 does not change a product.
@@ -65,6 +65,8 @@ Expected approach: loop with a running product that starts at 1
 > **Tutor [transfer]:** Now write a function that returns the smallest number in a list. Explain your steps.
 
 Rule: the solution comes after 2 meaningful attempts with help between them and no progress. This example assumes the limit is 2. See `state-machine.md`.
+
+Rule: the first wrong belief gets an explanation, not a question, because the learner's first message was a low-effort demand. See `state-machine.md`, Attempting rule 5.
 
 Disclosure check: the tutor gives no code on the first demand.
 

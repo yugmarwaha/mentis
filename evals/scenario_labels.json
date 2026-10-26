@@ -180,8 +180,8 @@
     "message": "total = 0, then a loop with total *= x. It always returns 0.",
     "expected": {
       "attempt": "partial",
-      "stuck": "no",
-      "misconception_present": false,
+      "stuck": "yes",
+      "misconception_present": true,
       "valid_alternative": false,
       "asks_for_solution": false,
       "ambiguous_question": false
@@ -206,10 +206,10 @@
       },
       {
         "speaker": "tutor",
-        "text": "What does 0 times any number give?"
+        "text": "Check the first step. 0 * x is 0 for every x, so the total stays 0. What start value would keep the first product right?"
       }
     ],
-    "message": "0. So I need a different start. Maybe total = None?",
+    "message": "So I need a different start. Maybe total = None?",
     "expected": {
       "attempt": "partial",
       "stuck": "no",
@@ -238,11 +238,11 @@
       },
       {
         "speaker": "tutor",
-        "text": "What does 0 times any number give?"
+        "text": "Check the first step. 0 * x is 0 for every x, so the total stays 0. What start value would keep the first product right?"
       },
       {
         "speaker": "learner",
-        "text": "0. So I need a different start. Maybe total = None?"
+        "text": "So I need a different start. Maybe total = None?"
       },
       {
         "speaker": "tutor",
@@ -278,11 +278,11 @@
       },
       {
         "speaker": "tutor",
-        "text": "What does 0 times any number give?"
+        "text": "Check the first step. 0 * x is 0 for every x, so the total stays 0. What start value would keep the first product right?"
       },
       {
         "speaker": "learner",
-        "text": "0. So I need a different start. Maybe total = None?"
+        "text": "So I need a different start. Maybe total = None?"
       },
       {
         "speaker": "tutor",

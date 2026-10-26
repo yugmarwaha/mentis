@@ -22,6 +22,8 @@ SCENARIOS = [
     ("s2c", case(Attempt.PARTIAL, Stuck.YES, 1), Action.HINT, None),
     ("s3a", case(Attempt.FULL, Stuck.NO, 0, misconception="range starts at 1"), Action.ASK, None),
     ("s3b", case(Attempt.FULL, Stuck.NO, 1, misconception="range starts at 1"), Action.EXPLAIN, None),
+    ("s4b", case(Attempt.PARTIAL, Stuck.YES, 0, misconception="start value 0", low=1), Action.EXPLAIN, State.HELPING),
+    ("s4c", case(Attempt.PARTIAL, Stuck.NO, 1, misconception="start value None"), Action.EXPLAIN, None),
     ("s4d", case(Attempt.NONE, Stuck.YES, 2, asks=True), Action.SOLUTION, State.SOLUTION_SHOWN),
     ("s5", case(Attempt.NONE, Stuck.NO, 0, ambiguous=True), Action.ASK, None),
     ("s5b", case(Attempt.NONE, Stuck.NO, 0), Action.INVITE, None),

@@ -23,7 +23,7 @@ EXPECTED_KEYS = (
     "attempt", "stuck", "misconception_present", "valid_alternative", "asks_for_solution", "ambiguous_question",
 )
 # Pinned labels: id -> (attempt, stuck, misconception_present, valid_alternative, asks_for_solution,
-# ambiguous_question). s4-m2 is partial; misconception_present is false on purpose (see evals/CLAUDE.md).
+# ambiguous_question). s4-m2 has a wrong belief about the start value.
 PINNED = {
     "s1-m1": ("full", "no", False, True, False, False),
     "s1-m2": ("partial", "no", False, False, False, False),
@@ -33,7 +33,7 @@ PINNED = {
     "s3-m1": ("full", "no", True, False, False, False),
     "s3-m2": ("partial", "no", True, False, False, False),
     "s4-m1": ("none", "unclear", False, False, True, False),
-    "s4-m2": ("partial", "no", False, False, False, False),
+    "s4-m2": ("partial", "yes", True, False, False, False),
     "s4-m3": ("partial", "no", True, False, False, False),
     "s4-m4": ("none", "yes", False, False, False, False),
     "s4-m5": ("none", "unclear", False, False, False, False),

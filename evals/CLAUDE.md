@@ -20,9 +20,6 @@ Exit codes:
 - 4: setup error. Check the key and the model ID.
 - 1: unexpected error. Python prints a traceback.
 
-## Known issue
-For s4-m2, the label `misconception_present` is false on purpose. A `true` label makes the policy explain where scenario 4 asks a question. Decide later.
-
 ## Know before you change
 - The labels are a first draft by one person. Review them before you trust a low agreement score.
 - A change to the label guide needs a matching change in `scenario_labels.json`.
