@@ -222,7 +222,69 @@ def test_bad_arguments_are_argparse_errors(script, monkeypatch, capsys, argv):
 def test_script_run_as_a_program_exits_2_without_a_key():
     env = {k: v for k, v in os.environ.items() if k not in KEY_VARS}
     env["PYTHONPATH"] = str(BACKEND_DIR)
-    r = subprocess.run([sys.executable, str(RUN_SCRIPT)], cwd=BACKEND_DIR, env=env,
-                       capture_output=True, text=True, timeout=60)
+    r = subprocess.run([sys.executable, str(RUN_SCRIPT), "--env-file", os.devnull], cwd=BACKEND_DIR,
+                       env=env, capture_output=True, text=True, timeout=60)
     assert r.returncode == 2, r.stdout + r.stderr
     assert "ANTHROPIC_API_KEY" in r.stdout + r.stderr
+
+
+# ---- the .env file ---------------------------------------------------------
+
+def test_env_file_sets_the_key_and_prints_nothing(script, monkeypatch, capsys, tmp_path):
+    for name in KEY_VARS:
+        monkeypatch.delenv(name, raising=False)
+    env = tmp_path / ".env"
+    env.write_text('# comment\n\nexport OTHER_VAR_FOR_TEST="quoted value"\n'
+                   f"ANTHROPIC_API_KEY={FAKE_KEY}\nBAD LINE\n=novalue\n")
+    monkeypatch.delenv("OTHER_VAR_FOR_TEST", raising=False)
+    script.load_env_file(env)
+    assert os.environ["ANTHROPIC_API_KEY"] == FAKE_KEY
+    assert os.environ["OTHER_VAR_FOR_TEST"] == "quoted value"
+    monkeypatch.delenv("OTHER_VAR_FOR_TEST", raising=False)
+    out = capsys.readouterr()
+    assert out.out == "" and out.err == ""
+
+
+def test_a_variable_already_set_wins_over_the_file(script, monkeypatch, tmp_path):
+    monkeypatch.setenv("ANTHROPIC_API_KEY", FAKE_KEY)
+    env = tmp_path / ".env"
+    env.write_text("ANTHROPIC_API_KEY=from-the-file\n")
+    script.load_env_file(env)
+    assert os.environ["ANTHROPIC_API_KEY"] == FAKE_KEY
+
+
+def test_an_empty_value_and_a_missing_file_set_nothing(script, monkeypatch, tmp_path):
+    for name in KEY_VARS:
+        monkeypatch.delenv(name, raising=False)
+    env = tmp_path / ".env"
+    env.write_text("ANTHROPIC_API_KEY=\n")
+    script.load_env_file(env)
+    script.load_env_file(tmp_path / "does-not-exist")
+    assert "ANTHROPIC_API_KEY" not in os.environ
+
+
+def test_main_loads_the_env_file_option_before_the_key_check(script, monkeypatch, capsys, tmp_path):
+    for name in KEY_VARS:
+        monkeypatch.delenv(name, raising=False)
+    env = tmp_path / ".env"
+    env.write_text(f"ANTHROPIC_API_KEY={FAKE_KEY}\n")
+    fake = FakeModel()
+    monkeypatch.setattr(script, "HaikuModel", fake)
+    code = script.main(["--env-file", str(env)])
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    assert code == 0 and fake.calls
+    assert FAKE_KEY not in capsys.readouterr().out
+
+
+def test_main_without_an_env_file_reads_no_file(script, monkeypatch, capsys):
+    for name in KEY_VARS:
+        monkeypatch.delenv(name, raising=False)
+    fake = FakeModel()
+    monkeypatch.setattr(script, "HaikuModel", fake)
+    assert script.main([]) == 2 and fake.calls == []
+
+
+def test_env_example_is_tracked_and_has_no_key():
+    text = (RUN_SCRIPT.parents[1] / ".env.example").read_text()
+    assert "ANTHROPIC_API_KEY=" in text
+    assert not re.search(r"ANTHROPIC_API_KEY=\S", text)

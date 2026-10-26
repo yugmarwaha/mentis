@@ -23,7 +23,7 @@ cd backend && uv run pytest -q
 ```
 
 ## Run the scenario eval
-The eval calls the Haiku client. It costs a little money. It needs `ANTHROPIC_API_KEY` or `ANTHROPIC_AUTH_TOKEN` in your environment.
+The eval calls the Haiku client. It costs a little money. Copy `.env.example` to `.env` and put your `ANTHROPIC_API_KEY` there. Git ignores `.env`. The script loads it. A variable in your shell wins over the file.
 
 ```bash
 cd backend && uv run python ../evals/run_scenarios.py

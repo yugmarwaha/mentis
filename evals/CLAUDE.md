@@ -7,8 +7,8 @@ Scenarios, grading rubrics, baseline prompts, and comparison scripts. Status: on
 - `run_scenarios.py`: sends each case to the Haiku client through `app.evaluator.evaluate`. It prints the fallback count and the failure kinds first. Then it prints expected and got values for each field, and the agreement for each field. The scores leave out fallback cases.
 
 ## Run it
-1. Set `ANTHROPIC_API_KEY` or `ANTHROPIC_AUTH_TOKEN` in your shell. The SDK reads it from the environment.
-2. Run `cd backend && uv run python ../evals/run_scenarios.py`.
+1. Copy `.env.example` to `.env` in the repo root. Put your key after `ANTHROPIC_API_KEY=`. Git ignores `.env`. You can set `ANTHROPIC_API_KEY` or `ANTHROPIC_AUTH_TOKEN` in your shell instead. A variable in the shell wins over the file.
+2. Run `cd backend && uv run python ../evals/run_scenarios.py`. The script loads `.env` itself. Use `--env-file PATH` to load another file.
 3. Add `--model-id ID`, `--effort LEVEL`, or `--max-tokens N` to try other settings. `LEVEL` is low, medium, high, xhigh, or max.
 
 The script makes real API calls. It costs a little money. The developer runs it by hand.

@@ -29,6 +29,7 @@ Each of `app/policy/`, `app/evaluator/`, `app/llm/`, and `tests/` has its own `C
 ## Haiku client (`app/llm/`)
 - `HaikuModel` implements the `Model` interface with the Anthropic SDK. It calls a large language model (LLM). The default model is `claude-haiku-5-5` at `low` effort.
 - The SDK reads `ANTHROPIC_API_KEY` or `ANTHROPIC_AUTH_TOKEN` from the environment. Never store the key in the repository.
+- The Haiku client reads no file. The scenario eval script loads the `.env` file in the repo root (see `.env.example`). A server must set the variable itself.
 - The call has a 30-second timeout and no SDK retries. The evaluator retries once.
 - Only `stop_reason` `end_turn` returns text. `refusal` raises `ModelRefusal`. Any other value, or no text block, raises `ModelCallError`.
 - A missing key, a wrong key, no permission, an unknown model, or a bad request raises `ModelSetupError`.
